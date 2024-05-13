@@ -3,7 +3,6 @@ from database_1 import add_userdata, login_user, find_user_by_email, send_passwo
 from streamlit.components.v1 import html
 import webbrowser
 import os
-import base64
 import pandas as pd
 
 
