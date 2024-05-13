@@ -3,6 +3,8 @@ import uuid
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+import streamlit as st
+
 
 # MongoDB connection string
 CONNECTION_STRING = st.secrets['mongoURI']
