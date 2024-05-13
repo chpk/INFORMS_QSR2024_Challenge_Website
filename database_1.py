@@ -5,7 +5,7 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
 # MongoDB connection string
-CONNECTION_STRING = "mongodb+srv://cpremithkumar:AFRMIg6IOzMfIG9w@informsqschallenge.vpwbqi4.mongodb.net/?retryWrites=true&w=majority&appName=informsqschallenge"
+CONNECTION_STRING = st.secrets['mongoURI']
 
 client = MongoClient(CONNECTION_STRING)
 db = client.user_database  # Name your database
