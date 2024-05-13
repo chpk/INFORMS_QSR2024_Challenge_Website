@@ -1,12 +1,11 @@
 import streamlit as st
 from database_1 import add_userdata, login_user, find_user_by_email, send_password_email, update_password
 from streamlit.components.v1 import html
-import webbrowser
 import os
 import pandas as pd
 
 
-st. set_page_config(layout="wide")
+st.set_page_config(page_title="INFORMS QSR 2024 Challenge", layout="wide", initial_sidebar_state="auto")
 # Initialize the users database
 hide_streamlit_style = """
             <style>
@@ -104,6 +103,15 @@ def view_leaderboard():
     if st.button('Back to Home Page'):
         st.session_state.page = 'home'
         st.rerun()
+
+def open_page(url):
+    open_script= """
+        <script type="text/javascript">
+            window.open('%s', '_blank').focus();
+        </script>
+    """ % (url)
+    html(open_script)
+
 
 def display_home_page():
     # Custom CSS to inject into the Streamlit page
@@ -238,8 +246,10 @@ def display_home_page():
     else:
         st.markdown("Please agree to the terms and conditions to download the dataset.")
 
-    if st.button('View Flyer'):
-        webbrowser.open_new_tab("https://drive.google.com/file/d/1F7YcRGvhfV8vLOIpfVNBwrirJyw1-rIr/view?usp=sharing")
+    st.markdown("<a href='https://drive.google.com/file/d/1F7YcRGvhfV8vLOIpfVNBwrirJyw1-rIr/view?usp=sharing' target='_blank'><b><span style='font-size:28px;color:red;'>View Flyer</span></b></a>", unsafe_allow_html=True)
+        
+
+
         
         #st.image("image3.png", use_column_width=False)
     #with col2:
