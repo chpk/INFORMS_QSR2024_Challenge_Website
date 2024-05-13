@@ -1,0 +1,67 @@
+Virginia Tech
+3D voxel based Diffusion Model with text conditioning and policy based guidance mechanism to generate 3D objects.
+
+
+currently rsearching and developing a single image-view NeRF based Conditional Diffusion Model for zero-shot 3D object shape generation.
+
+Do not focus  
+Training: input view and noisy target view is given and also target view features generated from pixelNeRF are given as consisiton and the model is objectted to generat the resuting output in the target view. Like this the diffusion model is made to generate multiple views and the corresposing camera angles/locations/positions are also fed to the NeRF model to generate a 3D object.
+During inference, multiple noise images and multiple NeRF based target views as conssitons are fed tot eh model to genrate multiple 3D views of the object amd these 2D views are fed to the nerf model to generate a 3D shape.
+
+ 
+Developing a large scale agent based LLM web chatbot for business process optimizations. FInetuned the LLM using LoRA on custom dataset nd integrated a real time web based RAG pipeline.
+
+
+Supervue Ai
+developed and deployed several core AI modules. Some of them are:
+Developed a data-efficient image transformer based facial recognition API using contrastive learning
+
+developed India’s first Social Distance Monitoring app using patented object flow regression method built on Yolo and DeepSort with adaptive estimation of camera FOV calibration paramters
+
+Also built a large scale real time person detection and tracking app using DERT model
+on TensorRT ONXX inference engine to track 1.3M people across india
+
+Say about the coal heap caluculation app for adhani ports
+
+Samsung R&D Institute
+video inpainting algorithm for the galaxy camera app
+
+Zebi Data
+Contributed to the development and deployment of India’s first blockchain assisted autonomous check-in system with facial recognition and ID card verification features
+
+also develped a 3D face recongiton app. 
+method: an auto encoder directly regress the 3D facial structure and dense alignment from a single image and based on the 3D facial structer a mesh structure is fitted and the texture is cropped and pasted from the 2D image to 3D image based using SIFT+PnP method
+
+
+
+
+
+
+At the end of interview
+Questions to ask:
+1) Considering my background in developing applications using PyTorch, TensorFlow, and experience with 3D data rocessing and deep learning techniques, how would I be able to leverage these skills in the ongoing projects at ABB?
+
+2) Could you elaborate on the process for interns to contribute to generating intellectual property and writing scientific publications at ABB? I have previously authored papers for AAAI and MSEC conferences and am eager to continue contributing academically
+
+3) Could you share more details about the specific vision-based robot manipulation technologies the team is currently focusing on, and what future projects I might be involved in if selected for this internship?
+
+
+Statistical outlier removal
+pass through filter
+marching cubes
+
+ICP
+
+surface normals
+curvature
+
+Pointnet
+
+DeepSort
+Deeplab
+
+hungarian assignment
+kalman filter
+
+
+quadernion representation

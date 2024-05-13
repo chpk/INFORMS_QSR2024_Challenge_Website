@@ -1,0 +1,133 @@
+● Agriculture Fleet Management Ag Inputs
+(ag inputs)
+● Cattle Feed Optimization Meat Producers
+(livestock, feed, meat)
+● Cattle flow Meat Producers
+(livestock, meat)
+● Chicken Feed Optimization Meat Producers
+(chicken, feed, meat)
+● Dairy Inventory Management Dairy
+(dairy, inventory)
+● Hog Feed Optimization Meat Producers
+(hog, feed, meat)
+● Hog Flow Meat Producers
+(hog, meat)
+● Manage mycotoxins for animal feed Meat Producers
+(feed, meat, mycotoxins)
+● Product Blending Food Processing
+(blending, processing)
+● Sustainable product formulation Food Processing
+(processing, formulation)
+● Yield Forecasting - Outdoor Crop
+(yield, crop, growers)
+● Yield Forecasting Risk Mitigation
+(yield, risk mitigation)
+Product Challenges:
+● Harvest Planning - Crop Growers
+(crop, growers)
+● Soil Sampling and Selling Fertilizer Ag Inputs
+(fertilizer, ag inputs)
+● Packaging & Quality Matching - Grower Growers
+(packaging, growers)
+● Packaging & Quality Matching - Melons Growers
+(packaging, growers, fruit, melons)
+● Packaging Matching - Fertilizer Ag Inputs
+(packaging, fertilizer, ag inputs)
+● Packaging Matching Supply Chain Planning
+(packaging, supply chain)
+Supply Chain and Logistics Challenges:
+● Commodities Trading Supply Chain Planning
+(commodities, supply chain) 
+● Inventory Management Supply Chain Planning
+(inventory, supply chain, all)
+● Logistics - Inbound Supply Chain Planning
+(inbound logistics, supply chain, all)
+● Logistics - Inbound Commodities Growers
+(inbound logistics, commodities, growers)
+● Logistics - Inbound Dairy Dairy
+(inbound logistics, dairy)
+● Logistics - Inbound Eggs Meat Producers
+(inbound logistics, eggs, meat)
+● Logistics - Inbound Fertilizer Ag Inputs
+(inbound logistics, fertilizer, ag inputs)
+● Logistics - Outbound Supply Chain Planning
+(outbound logistics, supply chain)
+● Network Optimization Supply Chain Planning
+(network optimization, supply chain)
+● Network Optimization - Close Facility Supply Chain Planning
+(network optimization, facility, supply chain)
+● Network Optimization - New Facility Supply Chain Planning
+(network optimization, facility, supply chain)
+● Network Optimization - Prod. Planning Supply Chain Planning
+(network optimization, product, supply chain)
+● New Site Selection - Growers
+(site, growers)
+● Outbound Logistics - Beef Meat Producers
+(outbound logistics, meat)
+● Outbound Logistics - Eggs Meat Producers
+(outbound logistics, eggs, meat)
+● Outbound Logistics - Pork Meat Producers
+(outbound logistics, pork, meat)
+● Production Planning Supply Chain Planning
+(production, supply chain)
+● Transportation (Route Planning) Supply Chain Planning
+(transportation, supply chain)
+● Transportation (Routing) - Growers
+(transportation, growers)
+Environmental and Sustainability Challenges:
+● Farm Renewable Energy Energy
+(energy, sustainability)
+● Farm Renewable Energy 2nd Copy Energy
+(energy, sustainability)
+Regulatory and Compliance Challenges:
+● Ensuring compliance with international standards (Export and import of food products)
+(compliance, international, food, supply chain)
+● Managing global supply chains and regulations (International trade of agricultural commodities)
+(compliance, international, commodities, supply chain)
+Market and Consumer Trends Challenges:
+● Packaging & Quality Matching - Grower Growers
+(packaging, growers)
+● Packaging & Quality Matching - Melons Growers
+(packaging, melons, growers)
+● Packaging Matching - Fertilizer Ag Inputs
+(packaging, fertilizer, ag inputs)
+● Supply/Demand Matching - Asparagus Growers
+(supply chain, asparagus, growers)
+● Supply/Demand Matching - Avocados Growers
+(supply chain, avocados, growers)
+● Supply/Demand Matching - Bottling Growers
+(supply chain, bottling, growers)
+● Supply/Demand Matching - Chicken Feed Meat Producers
+(supply chain, feed, chickens, meat)
+● Supply/Demand Matching - Cotton Growers
+(supply chain, cotton)
+● Supply/Demand Matching - Fertilizers Ag Inputs
+(supply chain, fertilizer, ag inputs)
+● Supply/Demand Matching - Grain Growers
+(supply chain, grain, growers)
+● Supply/Demand Matching - Grapes Growers
+(supply chain, grapes, growers)
+● Supply/Demand Matching - Growers Growers
+(supply chain, growers)
+● Supply/Demand Matching Supply Chain Planning
+(supply chain)
+● Price Optimization Supply Chain Planning
+(price, supply chain)
+● Price Optimization - Fertilizer Ag Inputs
+(price, fertilizer, ag inputs)
+Labor and Workforce Challenges:
+● HR Optimization (Staffing) - Avocados Growers
+(HR, avocados, growers)
+● HR Optimization (Staffing) - Grapes Growers
+(HR, grapes, growers)
+● HR Optimization (Staffing) - Growers Growers
+(HR, growers)
+● HR Optimization (Staffing) - Melons Growers
+(HR, melons, growers)
+● HR Optimization (Staffing) - Asparagus Growers
+(HR, asparagus, growers)
+● HR Optimization (General Staffing) Supply Chain Planning
+(HR, supply chain)
+Misc.
+● New Use Case Water
+(water)
