@@ -3,8 +3,6 @@ import uuid
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-import streamlit as st
-
 
 # MongoDB connection string
 CONNECTION_STRING = st.secrets['mongoURI']
@@ -20,9 +18,9 @@ def create_collection():
         db.create_collection("users")
 
 # Function to add a new user with a unique hex string ID
-def add_userdata(new_user, new_password, new_user_name, new_email, new_affiliation, new_user_role):
+def add_userdata(new_user, new_password, new_user_name, new_email, new_affiliation, new_user_role, team_name, team_people, team_people_number):
     user_id = uuid.uuid4().hex  # Generates a random unique hexadecimal ID
-    user_data = {"user_id": user_id, "username": new_user, "password": new_password, "name":new_user_name, "email":new_email, "affiliation":new_affiliation, "role":new_user_role}
+    user_data = {"user_id": user_id, "username": new_user, "password": new_password, "name":new_user_name, "email":new_email, "affiliation":new_affiliation, "role":new_user_role, "team_name":team_name,"team_member_names":team_people, "team_size":team_people_number}
     result = users_collection.insert_one(user_data)
     return result.inserted_id
 
@@ -37,7 +35,9 @@ def login_user(username, password):
         return {
             "user_id": user["user_id"],  # Ensure 'user_id' is returned
             "username": user["username"],
-            "password": user["password"]  # It's generally not recommended to pass password around
+            "password": user["password"],  # It's generally not recommended to pass password around
+            "team_name":  user["team_name"],
+            "team_member_names":  user["team_member_names"]
         }
     else:
         return None
