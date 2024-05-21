@@ -5,7 +5,7 @@ import os
 import pandas as pd
 
 
-st.set_page_config(page_title="INFORMS QSR 2024 Challenge", layout="wide", initial_sidebar_state="auto")
+st.set_page_config(page_title="Manufacturing AI Competetion", layout="wide", initial_sidebar_state="auto")
 # Initialize the users database
 hide_streamlit_style = """
             <style>
@@ -74,9 +74,9 @@ def submission_page():
         code_file_test = st.file_uploader("Upload your model testing code file (.py)", type=['py'], key="testcode")
         requirements_file = st.file_uploader("Upload your requirements file (.txt)", type=['txt'], key="requirements")
         weights_file = st.file_uploader("Upload your weights file", key="weights")
-        additional_data_file = st.file_uploader("Upload your results summary report & code execution (test.py) details", key="additionaldata")
+        additional_data_file = st.file_uploader("Upload your results summary report (in .pptx format) & code execution (test.py) details", key="additionaldata")
 
-        submitted = st.form_submit_button('Upload My Data')
+        submitted = st.form_submit_button('Upload all the files')
         if submitted:
             # List of files to save
             files_to_save = [code_file_train, code_file_test, requirements_file, weights_file, additional_data_file]
@@ -92,13 +92,15 @@ def submission_page():
         st.rerun()
 
 def view_leaderboard():
+    st.markdown("### Your Team: " +str(st.session_state['teamname']))
+    st.write("Your team members: " + str(st.session_state['team_member_names']))
+    #st.write() 
     st.title("Top 10 Participants Leaderboard")
-
     # Read the leaderboard data from the CSV file
     leaderboard_data = pd.read_csv("leaderboard.csv")
 
     # Display the leaderboard table
-    st.table(leaderboard_data)
+    st.table(leaderboard_data.assign(hack='').set_index('hack'))
 
     if st.button('Back to Home Page'):
         st.session_state.page = 'home'
@@ -144,7 +146,8 @@ def display_home_page():
     st.markdown(custom_css, unsafe_allow_html=True)
     col1_1, col2_1, col3_1 = st.columns([0.9, 1.4, 0.9])
     with col2_1:
-        st.title("INFORMS QSR 2024 Challenge")
+        st.title("Manufacturing AI Competition")
+        st.write("Sponsored by Virginia Tech Academy of Data Science, laboratory of DSV, and INFORMS Quality, Statistics, and Reliability Section")
     # Introduction Section with Custom Styling
     #col1, col2 = st.columns([2, 1])
     #with col1:
@@ -156,17 +159,14 @@ def display_home_page():
         st.image("image1.png", width=1000)
     st.write("#")
     #with col2:
-    st.markdown("""
+    st.markdown(""" 
     <style>
         .big-text {
             font-size: 20px;
         }
     </style>
     <div class='section-background'>
-        <h1 class='big-font'>Manufacturing AI Competition</h1>
         <p class='big-text'>
-            Sponsored by Virginia Tech Academy of Data Science and INFORMS Quality, Statistics, and Reliability Section
-            <br><br>
             The Quality, Statistics, and Reliability (QSR) Section of the Institute for Operations Research and the Management Sciences (INFORMS) announces the Data Challenge Award to recognize excellence in data modeling techniques among the submissions to the 2024 QSR Data Challenge Competition. This award program brings prestige to the QSR Section as well as to the recipients honored.
             <br><br>
             <b>2024 INFORMS Annual Meeting</b><br>
@@ -195,17 +195,16 @@ def display_home_page():
     <div class='section-background'>
         <h2 class='big-font'>Problem Statement</h2>
         <p class='big-text'>
-            Predict the manufacturability of Microbial Fuel Cell Anode Structures using the provided dataset containing design variables, 3D geometry data in STL files, and binary manufacturability labels. The dataset consists of 1,000 designs with a 70/30 split between feasible and infeasible designs.
+            The objective of this competetion is to predict the manufacturability of Microbial Fuel Cell Anode Structures using the provided dataset containing design variables, 3D geometry data in STL files, and binary manufacturability labels. The dataset consists of 1,000 designs with a 70/30 split between feasible and infeasible designs.
             <br><br>
-            Develop an AI model to classify the manufacturability indicator using the entire dataset for training. Feature engineering and innovative modeling strategies to process the 3D data are highly encouraged. Sample code and environment information can be found in the <a href="https://drive.google.com/file/d/1F7YcRGvhfV8vLOIpfVNBwrirJyw1-rIr/view?usp=sharing" target='_blank'>competition flyer</a>.
+            Please develop an AI (or) statistics model to classify the manufacturability indicator using the entire dataset for training. Feature engineering and innovative modeling strategies to process the 3D data are highly encouraged. Sample code and environment information can be found in the <a href="https://drive.google.com/file/d/1F7YcRGvhfV8vLOIpfVNBwrirJyw1-rIr/view?usp=sharing" target='_blank'>competition flyer</a>.
             <br><br>
             <b>Dataset Details:</b>
             <ul class='big-text'>
-                <li>Download the dataset using this link. Please view the terms and conditions before downloading.</li>
-                <li>Refer to the <a href="https://pypi.org/project/numpy-stl/" target='_blank'>numpy-stl</a> and <a href="https://github.com/isl-org/Open3D" target='_blank'>Open3D</a> libraries for processing STL files.</li>
-                <li>Consider using the <a href="https://pypi.org/project/stl-to-voxel/" target='_blank'>stl-to-voxel</a> package to convert STL files into voxels, images, or videos.</li>
+                <li>Please download the dataset using this link. Please review the data non-disclosure terms and conditions before downloading.</li>
+                <li>Please refer to the <a href="https://pypi.org/project/numpy-stl/" target='_blank'>numpy-stl</a> and <a href="https://github.com/isl-org/Open3D" target='_blank'>Open3D</a> libraries for processing STL files.</li>
+                <li>Also, consider using the <a href="https://pypi.org/project/stl-to-voxel/" target='_blank'>stl-to-voxel</a> package to convert STL files into voxels, images, or videos.</li>
             </ul>
-            <span class='big-text'>Data reuse and redistribution is not allowed without written consent.</span>
         </p>
     </div>
     """
@@ -224,21 +223,27 @@ def display_home_page():
 
     # Terms and Conditions
     terms_and_conditions = """
-    ### Terms and Conditions
+    ### Data non-disclosure terms and conditions
 
-    By downloading the data files, you agree with the following terms to process the data:
+    By downloading the data files, I agree with the following terms to process the data:
 
-    1. The data that I handled are generated from the Laboratory of Data Science and Visualization. The data are Virginia Tech's property and belong to Dr. Ran Jin's research lab.
-    2. Re-distribution of the data will not be allowed with other personnel besides my manufacturing AI competition teammates. I will not use the data for other purposes such as research publications, without written approval from Dr. Ran Jin (jran5@vt.edu). Appropriate references must be included in my future publications.
+    1. The data [1] [2] [3] that I handled are generated from the Laboratory of Data Science and Visualization at Virginia Tech. The data are Virginia Tech's property and belong to Dr. Ran Jin's research lab.
+    2. Re-distribution of the data [1] [2] [3] will not be allowed with other personnel besides my manufacturing AI competition teammates. I will not use the data for other purposes such as research publications, without written approval from Dr. Ran Jin (jran5@vt.edu). Appropriate references must be included in my future publications.
     3. Disclosure period: The data should never be disclosed if no written approval is provided.
+    
+    References:
+    [1]	Zeng, Y., Chilukuri, PK., Zhou, X., Lourentzou, I., & Jin, R. (2024). Performance-Oriented Representation Learning in Directed Acyclic Graph Neural Network for High-quality Dataset Sharing. In Manuscript.
+    [2]	Zeng, Y. (2024)  Data Exchange for Artificial Intelligence Incubation in Manufacturing Industrial Internet (Doctoral dissertation, Virginia Tech)
+    [3]	P. K. Chilukuri, B. Song, S. Kang, and R. Jin, "Generating Optimized 3D Designs for Manufacturing Using a Guided Voxel Diffusion Model," in Proc. ASME 2024 Int. Manuf. Sci. Eng. Conf., MSEC2024, Knoxville, TN, USA, Jun. 17-21, 2024, MSEC2024-125075
+
     """
 
     # Display the terms and conditions in an expander
-    with st.expander("View Terms and Conditions"):
+    with st.expander("View data non-disclosure terms and conditions"):
         st.markdown(terms_and_conditions)
 
     # Checkbox for agreeing to the terms and conditions
-    agree_checkbox = st.checkbox("I agree to the terms and conditions")
+    agree_checkbox = st.checkbox("I agree to the data non-disclosure terms and conditions")
 
     # Download button
     if agree_checkbox:
@@ -246,7 +251,7 @@ def display_home_page():
     else:
         st.markdown("Please agree to the terms and conditions to download the dataset.")
 
-    st.markdown("<a href='https://drive.google.com/file/d/1F7YcRGvhfV8vLOIpfVNBwrirJyw1-rIr/view?usp=sharing' target='_blank'><b><span style='font-size:28px;color:red;'>View Flyer</span></b></a>", unsafe_allow_html=True)
+    #st.markdown("<a href='https://drive.google.com/file/d/1F7YcRGvhfV8vLOIpfVNBwrirJyw1-rIr/view?usp=sharing' target='_blank'><b><span style='font-size:28px;color:red;'>View Flyer</span></b></a>", unsafe_allow_html=True)
         
 
 
@@ -272,7 +277,7 @@ def display_home_page():
     <div class='section-background'>
         <h2 class='big-font'>Submission Procedure</h2>
         <p class='big-text'>
-            This is a team-based competition. Each team should have a maximum of 4 members from academia or industry. Students' participation is highly encouraged. Only <b>PYTHON</b> code with required formats, the trained and serialized model object <b>weight file</b> (see the detailed instructions in the <a href="https://drive.google.com/file/d/1F7YcRGvhfV8vLOIpfVNBwrirJyw1-rIr/view?usp=sharing" target='_blank'>competition flyer</a>), and a <b>result summary report</b> should be submitted here using the below provided button. Multiple submissions will be allowed for performance tests online, but only the last submission from the team will be used for competition. No email communications will be needed.
+            This is a team-based competition. Each team should have a maximum of 4 members from academia or industry. Students' participation is highly encouraged. Only <b>PYTHON</b> code with required formats, the trained and serialized model object <b>weight file</b> (see the detailed instructions in the <a href="https://drive.google.com/file/d/1F7YcRGvhfV8vLOIpfVNBwrirJyw1-rIr/view?usp=sharing" target='_blank'>competition flyer</a>), and a <b>result summary report (in .pptx format)</b> should be submitted here using the below provided button. Multiple submissions will be allowed for performance tests online, but only the last submission from the team will be used for competition. No email communications will be needed.
             <br><br>
             Please upload a Python file named <b>test.py</b> containing the inference code for your trained model. The <b>test.py</b> file should adhere to the following guidelines:
             <ol>
@@ -286,7 +291,7 @@ def display_home_page():
     </div>
     """, unsafe_allow_html=True)
     #st.image("image3.png", use_column_width=False)
-    if st.button('Submit Your Data Here'):
+    if st.button('Submit Your Code and Results Here'):
         #print("HI")
         st.session_state.page = 'submit'
         st.rerun()
@@ -306,7 +311,7 @@ def display_home_page():
     <div class='section-background'>
         <h2 class='big-font'>Evaluation Procedure</h2>
         <p class='big-text'>
-        The performance of the algorithms will be automatically evaluated on an undisclosed testing dataset generated from the same design simulation engine with the same parameter settings. Three finalists will be selected based on the performance of the algorithms and will be required to present the methodology and the results in an in-person session in INFORMS annual meeting 2024. One winning team (<b>see the leaderboard for results</b>) will be selected by judges and all finalists will be recognized in the INFORMS-QSR business meeting. Finalists may be invited to participate in future activities, such as industrial engagement and research exchange, held by Virginia Tech Academy of Data Science
+        The performance of the algorithms will be automatically evaluated on an undisclosed testing dataset generated from the same design simulation engine with the same parameter settings. Three finalists will be selected based on the performance of the algorithms (<b>see the leaderboard for results</b>) and will be invited to present the methodology and the results in an in-person session in INFORMS annual meeting 2024. One winning team will be selected by judges and all finalists will be recognized in the INFORMS-QSR business meeting.
                 </p>
     """, unsafe_allow_html=True)
     if st.button('View Leaderboard'):
@@ -322,7 +327,7 @@ def display_home_page():
     st.markdown("""
     - Dr. Tom Woteki, Virginia Tech ([drwo@vt.edu](mailto:drwo@vt.edu))
     - Dr. Xiaoyu Chen, University at Buffalo ([xchen325@buffalo.edu](mailto:xchen325@buffalo.edu))
-    - Dr. Ran Jin, Virginia Tech ([jran5@vt.edu](mailto:jran5@vt.edu))
+    - Dr. Ran Jin, Virginia Tech ([jran5@vt.edu](mailto:jran5@vt.edu)) (Contact Person)
     - Dr. Ismini Lourentzou, University of Illinois Urbana-Champaign ([lourent2@illinois.edu](mailto:lourent2@illinois.edu)) 
     - Dr. Hongyue Sun, University of Georgia ([hongyuesun@uga.edu](mailto:hongyuesun@uga.edu))
     
@@ -363,6 +368,12 @@ def main():
     if 'page' not in st.session_state:
         st.session_state.page = 'login'
         
+    if 'teamname' not in st.session_state:
+         st.session_state.teamname = ' '
+    
+    if 'team_member_names' not in st.session_state:
+         st.session_state.team_member_names = ' '
+        
     # Display sign-in/sign-up pages if the user is not logged in
     if st.session_state.page == 'home':
         display_home_page()
@@ -372,6 +383,8 @@ def main():
             st.session_state.logged_in = False
             st.session_state.user_id = None
             st.session_state.page = 'login'
+            st.session_state.teamname = ' '
+            st.session_state.team_member_names = ' '
             #st.session_state.clear()
             st.rerun()
     elif st.session_state.page == 'submit':
@@ -399,6 +412,8 @@ def main():
                         st.session_state['logged_in'] = True
                         st.session_state['username'] = user_data["username"]
                         st.session_state['user_id'] = user_data["user_id"]  # Save the user_id in the session
+                        st.session_state['teamname'] = user_data["team_name"]
+                        st.session_state['team_member_names'] = user_data["team_member_names"]
                         st.toast(f"Logged in as {user_data['username']} with User ID: {user_data['user_id']}")
                         st.session_state.page = 'home'
                         st.rerun()
@@ -417,16 +432,20 @@ def main():
 
             elif st.session_state.choice == "SignUp":
                 st.subheader("Create New Account")
+                st.write("Only one person per group for registration")
                 new_user_name_firstname = st.text_input("First Name")
                 new_user_name_last_name = st.text_input("Last Name")
                 new_email = st.text_input("E-Mail")
-                new_affiliation = st.text_input("Affiliation (Company/University)")
-                new_user_role = st.text_input("Role")
+                new_affiliation = st.text_input("Name of the Company/University")
+                new_user_role = st.text_input("Title")
+                team_name = st.text_input("Name of your team")
+                team_people = st.text_input("Enter the names of your teammates each seperated by comma")
+                team_people_number = st.text_input("Team size (1 to 4)")
                 new_user = st.text_input("Username")
                 new_password = st.text_input("Password", type='password')
     
                 if st.button("Register",type="primary"):
-                    add_userdata(new_user, new_password, new_user_name_firstname + " , " + new_user_name_last_name, new_email, new_affiliation, new_user_role)
+                    add_userdata(new_user, new_password, new_user_name_firstname + " , " + new_user_name_last_name, new_email, new_affiliation, new_user_role, team_name, team_people, team_people_number)
                     st.toast("You have successfully created an account! Please go to the Login menu to log in.")
                     st.session_state.choice = "Login"
                     st.session_state.page = 'login'
