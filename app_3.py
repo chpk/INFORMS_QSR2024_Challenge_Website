@@ -1,9 +1,12 @@
 import streamlit as st
-from database_1 import add_userdata, login_user, find_user_by_email, send_password_email, update_password
+from database_1 import add_userdata, login_user, find_user_by_email, send_password_email, update_password, users_collection
 from streamlit.components.v1 import html
 import os
 import pandas as pd
-
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+import time
 
 st.set_page_config(page_title="Manufacturing AI Competetion", layout="wide", initial_sidebar_state="auto")
 # Initialize the users database
@@ -147,7 +150,7 @@ def display_home_page():
     col1_1, col2_1, col3_1 = st.columns([0.9, 1.4, 0.9])
     with col2_1:
         st.title("Manufacturing AI Competition")
-        st.write("Sponsored by Virginia Tech Academy of Data Science, laboratory of DSV, and INFORMS Quality, Statistics, and Reliability Section")
+        st.markdown("##### Sponsored by Virginia Tech Academy of Data Science, laboratory of DSV, and INFORMS Quality, Statistics, and Reliability (QSR) Section")
     # Introduction Section with Custom Styling
     #col1, col2 = st.columns([2, 1])
     #with col1:
@@ -165,19 +168,24 @@ def display_home_page():
             font-size: 20px;
         }
     </style>
+    <style>
+        .big-text-1 {
+            font-size: 24px;
+        }
+    </style>
     <div class='section-background'>
         <p class='big-text'>
-            The Quality, Statistics, and Reliability (QSR) Section of the Institute for Operations Research and the Management Sciences (INFORMS) announces the Data Challenge Award to recognize excellence in data modeling techniques among the submissions to the 2024 QSR Data Challenge Competition. This award program brings prestige to the QSR Section as well as to the recipients honored.
+            The Quality, Statistics, and Reliability (QSR) Section of the Institute for Operations Research and the Management Sciences (INFORMS) announces the Manufacturing AI Competition to recognize excellence in data modeling techniques among the submissions to the 2024 QSR Manufacturing AI Competition. This award program brings prestige to the QSR Section as well as to the recipients honored.
             <br><br>
             <b>2024 INFORMS Annual Meeting</b><br>
             Date: October 20 – 23, 2024<br>
             Location: Seattle, Washington, USA
             <br><br>
             <b>Important Dates:</b>
-            <ul class='big-text'>
-                <li>Submission Deadline: August 19, 2024</li>
-                <li>Notification of Finalists: September 2, 2024</li>
-                <li>Presentations: October 20 – 23, 2024</li>
+            <ul class='big-text-1'>
+                <li class='big-text'>Submission Deadline: August 19, 2024</li>
+                <li class='big-text'>Notification of Finalists: September 2, 2024</li>
+                <li class='big-text'>Presentations: October 20 – 23, 2024</li>
             </ul>
         </p>
     </div>
@@ -195,9 +203,9 @@ def display_home_page():
     <div class='section-background'>
         <h2 class='big-font'>Problem Statement</h2>
         <p class='big-text'>
-            The objective of this competetion is to predict the manufacturability of Microbial Fuel Cell Anode Structures using the provided dataset containing design variables, 3D geometry data in STL files, and binary manufacturability labels. The dataset consists of 1,000 designs with a 70/30 split between feasible and infeasible designs.
+            The objective of this competition is to predict the manufacturability of Microbial Fuel Cell Anode Structures using the provided dataset containing design variables, 3D geometry data in STL files, and binary manufacturability labels. The dataset consists of 1,000 designs with a 70/30 split between feasible and infeasible designs.
             <br><br>
-            Please develop an AI (or) statistics model to classify the manufacturability indicator using the entire dataset for training. Feature engineering and innovative modeling strategies to process the 3D data are highly encouraged. Sample code and environment information can be found in the <a href="https://drive.google.com/file/d/1F7YcRGvhfV8vLOIpfVNBwrirJyw1-rIr/view?usp=sharing" target='_blank'>competition flyer</a>.
+            Participating teams are tasked to develop an AI (or) statistics model to classify the manufacturability indicator using the entire dataset for training. Feature engineering and innovative modeling strategies to process the 3D data are highly encouraged. Sample code and environment information can be found in the <a href="https://drive.google.com/file/d/158cly7gw6QuVdaoq9jyvSoxY7Bta9z1G/view?usp=sharing" target='_blank'>competition flyer</a>.
             <br><br>
             <b>Dataset Details:</b>
             <ul class='big-text'>
@@ -227,14 +235,14 @@ def display_home_page():
 
     By downloading the data files, I agree with the following terms to process the data:
 
-    1. The data [1] [2] [3] that I handled are generated from the Laboratory of Data Science and Visualization at Virginia Tech. The data are Virginia Tech's property and belong to Dr. Ran Jin's research lab.
-    2. Re-distribution of the data [1] [2] [3] will not be allowed with other personnel besides my manufacturing AI competition teammates. I will not use the data for other purposes such as research publications, without written approval from Dr. Ran Jin (jran5@vt.edu). Appropriate references must be included in my future publications.
+    1. The data [1] [2] [3] handled are generated from the Laboratory of Data Science and Visualization at Virginia Tech. The data are Virginia Tech's property and belong to Dr. Ran Jin's research lab.
+    2. Re-distribution of the data [1] [2] [3] will not be allowed with other personnel besides my manufacturing AI competition teammates, to be used for this competition and deleted thereafter. I will not use the data for other purposes such as research publications, without written approval from Dr. Ran Jin (jran5@vt.edu). Appropriate references must be included in my future publications.
     3. Disclosure period: The data should never be disclosed if no written approval is provided.
     
-    References:
-    [1]	Zeng, Y., Chilukuri, PK., Zhou, X., Lourentzou, I., & Jin, R. (2024). Performance-Oriented Representation Learning in Directed Acyclic Graph Neural Network for High-quality Dataset Sharing. In Manuscript.
-    [2]	Zeng, Y. (2024)  Data Exchange for Artificial Intelligence Incubation in Manufacturing Industrial Internet (Doctoral dissertation, Virginia Tech)
-    [3]	P. K. Chilukuri, B. Song, S. Kang, and R. Jin, "Generating Optimized 3D Designs for Manufacturing Using a Guided Voxel Diffusion Model," in Proc. ASME 2024 Int. Manuf. Sci. Eng. Conf., MSEC2024, Knoxville, TN, USA, Jun. 17-21, 2024, MSEC2024-125075
+    References:\n
+    [1]	Zeng, Y., Chilukuri, PK., Zhou, X., Lourentzou, I., & Jin, R. (2024). Performance-Oriented Representation Learning in Directed Acyclic Graph Neural Network for High-quality Dataset Sharing. In Manuscript. \n
+    [2]	Zeng, Y. (2024)  Data Exchange for Artificial Intelligence Incubation in Manufacturing Industrial Internet (Doctoral dissertation, Virginia Tech) \n
+    [3]	P. K. Chilukuri, B. Song, S. Kang, and R. Jin, Generating Optimized 3D Designs for Manufacturing Using a Guided Voxel Diffusion Model, in Proc. ASME 2024 Int. Manuf. Sci. Eng. Conf., MSEC2024, Knoxville, TN, USA, Jun. 17-21, 2024, MSEC2024-125075
 
     """
 
@@ -277,7 +285,7 @@ def display_home_page():
     <div class='section-background'>
         <h2 class='big-font'>Submission Procedure</h2>
         <p class='big-text'>
-            This is a team-based competition. Each team should have a maximum of 4 members from academia or industry. Students' participation is highly encouraged. Only <b>PYTHON</b> code with required formats, the trained and serialized model object <b>weight file</b> (see the detailed instructions in the <a href="https://drive.google.com/file/d/1F7YcRGvhfV8vLOIpfVNBwrirJyw1-rIr/view?usp=sharing" target='_blank'>competition flyer</a>), and a <b>result summary report (in .pptx format)</b> should be submitted here using the below provided button. Multiple submissions will be allowed for performance tests online, but only the last submission from the team will be used for competition. No email communications will be needed.
+            This is a team-based competition. Each team should have a maximum of 4 members from academia or industry. Students' participation is highly encouraged. Only <b>PYTHON</b> code with required formats, the trained and serialized model object <b>weight file</b> (see the detailed instructions in the <a href="https://drive.google.com/file/d/158cly7gw6QuVdaoq9jyvSoxY7Bta9z1G/view?usp=sharing" target='_blank'>competition flyer</a>), and a <b>result summary report (in .pptx format)</b> should be submitted here using the submit button below. Multiple submissions will be allowed for performance tests online, but only the last submission from the team will be used for competition. No email communications will be needed.
             <br><br>
             Please upload a Python file named <b>test.py</b> containing the inference code for your trained model. The <b>test.py</b> file should adhere to the following guidelines:
             <ol>
@@ -311,7 +319,7 @@ def display_home_page():
     <div class='section-background'>
         <h2 class='big-font'>Evaluation Procedure</h2>
         <p class='big-text'>
-        The performance of the algorithms will be automatically evaluated on an undisclosed testing dataset generated from the same design simulation engine with the same parameter settings. Three finalists will be selected based on the performance of the algorithms (<b>see the leaderboard for results</b>) and will be invited to present the methodology and the results in an in-person session in INFORMS annual meeting 2024. One winning team will be selected by judges and all finalists will be recognized in the INFORMS-QSR business meeting.
+        The performance of the algorithms will be automatically evaluated on an undisclosed testing dataset generated from the same design simulation engine with the same parameter settings. The primary evaluation metric will be the F1 score. Accuracy, Type 1 error, and Type 2 error will also be considered as secondary metrics. The leaderboard will display the rankings based on the F1 score. Three finalists will be selected based on the highest F1 scores achieved on the undisclosed testing dataset. In the event of a tie in the F1 score, the secondary metrics (accuracy, Type 1 error, and Type 2 error) will be used to break the tie. If there is still a tie after considering all the metrics, the novelty of the algorithm and the quality of the submitted report will be taken into account to determine the finalists. The three selected finalists will be invited to present their methodology and results in an in-person session at the INFORMS 2024 Annual Meeting. After the presentations, one winning team will be selected by the judges, who are the organizers of the competition (Dr. Tom Woteki, Dr. Xiaoyu Chen, Dr. Ran Jin, Dr. Ismini Lourentzou, and Dr. Hongyue Sun). The judges will evaluate the finalists based on their presentations, the novelty and effectiveness of their algorithms, and the quality of their submitted reports. The winning team and all finalists will be recognized in the INFORMS-QSR business meeting.
                 </p>
     """, unsafe_allow_html=True)
     if st.button('View Leaderboard'):
@@ -333,23 +341,49 @@ def display_home_page():
     
     **Technical Support**: Mr. Premith Chilukuri, Virginia Tech ([cpremithkumar@vt.edu](mailto:cpremithkumar@vt.edu))
     """)
-    st.header("Acknowledgement")
+    st.header("Acknowledgment")
     st.markdown("""
-    This competition is partially supported by NSF project CMMI-2208864 and CMMI-2331985.
+    This competition is partially supported by NSF projects CMMI-2208864 and CMMI-2331985.
     """)
     
+def send_confirmation_email(email, username):
+    sender_email = "noreply.qsr24@gmail.com"
+    receiver_email = email
+    password = "fkui blhi ywxm smqx"  # SMTP server password for sender_email
+
+    message = MIMEMultipart("alternative")
+    message["Subject"] = "Account Registration Confirmation"
+    message["From"] = sender_email
+    message["To"] = receiver_email
+
+    text = f"""\
+    Hi,
+    Thank you for registering an account. Please use your username '{username}' to log in to the website."""
+    part1 = MIMEText(text, "plain")
+    message.attach(part1)
+
+    # Send email
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.starttls()
+    server.login(sender_email, password)
+    server.sendmail(sender_email, receiver_email, message.as_string())
+    server.quit()
+
 
 def display_forgot_password():
     st.subheader("Forgot Password")
-    email = st.text_input("Please enter your email address:")
+    email = st.text_input("Please enter your email address*")
     if st.button("Send Password"):
-        user = find_user_by_email(email)
-        if user:
-            # Ideally, here you would send a password reset link rather than the password itself
-            send_password_email(user['email'], user['password'])
-            st.toast("An email with your password has been sent.")
+        if not email:
+            st.error("Please enter your email address.")
         else:
-            st.error("No account found with that email.")
+            user = find_user_by_email(email)
+            if user:
+                # Ideally, here you would send a password reset link rather than the password itself
+                send_password_email(user['email'], user['password'])
+                st.success("An email with your password has been sent.")
+            else:
+                st.error("No account found with that email.")
 
 
 def main():
@@ -403,8 +437,8 @@ def main():
                 st.rerun()
             if st.session_state.choice == "Login":
                 st.subheader("Login Here")
-                username = st.text_input("User Name")
-                password = st.text_input("Password", type='password')
+                username = st.text_input("User Name*")
+                password = st.text_input("Password*", type='password')
                 if st.button("Submit",type="primary"):
                     user_data = login_user(username, password)
                     print(user_data)
@@ -432,26 +466,41 @@ def main():
 
             elif st.session_state.choice == "SignUp":
                 st.subheader("Create New Account")
-                st.write("Only one person per group for registration")
-                new_user_name_firstname = st.text_input("First Name")
-                new_user_name_last_name = st.text_input("Last Name")
-                new_email = st.text_input("E-Mail")
-                new_affiliation = st.text_input("Name of the Company/University")
+                st.write("Only one person per group needs to register")
+                new_user_name_firstname = st.text_input("First Name*")
+                new_user_name_last_name = st.text_input("Last Name*")
+                new_email = st.text_input("E-Mail*")
+                new_affiliation = st.text_input("Name of the Company/University*")
                 new_user_role = st.text_input("Title")
-                team_name = st.text_input("Name of your team")
-                team_people = st.text_input("Enter the names of your teammates each seperated by comma")
-                team_people_number = st.text_input("Team size (1 to 4)")
-                new_user = st.text_input("Username")
-                new_password = st.text_input("Password", type='password')
-    
-                if st.button("Register",type="primary"):
-                    add_userdata(new_user, new_password, new_user_name_firstname + " , " + new_user_name_last_name, new_email, new_affiliation, new_user_role, team_name, team_people, team_people_number)
-                    st.toast("You have successfully created an account! Please go to the Login menu to log in.")
-                    st.session_state.choice = "Login"
-                    st.session_state.page = 'login'
-                    st.rerun()
+                team_name = st.text_input("Name of your team*")
+                team_people = st.text_input("Enter the names of your teammates, each separated by a comma*")
+                team_people_number = st.number_input("Team size (1 to 4)", min_value=1, max_value=4, step=1)
+                new_user = st.text_input("Username*")
+                new_password = st.text_input("Password*", type='password')
+
+                if st.button("Register", type="primary"):
+                    if not all([new_user_name_firstname, new_user_name_last_name, new_email, new_affiliation, team_name, team_people, new_user, new_password]):
+                        st.error("Please fill in all the required fields.")
+                    elif users_collection.find_one({"email": new_email}):
+                        st.error("An account with this email already exists.")
+                    elif users_collection.find_one({"team_name": team_name}):
+                        st.error("A team with this name already exists. Please choose a unique team name.")
+                    elif len(team_people.split(",")) != team_people_number:
+                        st.error("The number of teammate names doesn't match the specified team size.")
+                    else:
+                        add_userdata(new_user, new_password, new_user_name_firstname + " , " + new_user_name_last_name, new_email, new_affiliation, new_user_role, team_name, team_people, team_people_number)
+                        send_confirmation_email(new_email, new_user)  # Send confirmation email
+                        st.success("You have successfully created an account! Please check your email for a confirmation message. Use your username to log in.")
+                        st.session_state.choice = "Login"
+                        st.session_state.page = 'login'
+                        time.sleep(5)
+                        st.rerun()
+
             elif st.session_state.choice == "Forgot Password":
                 display_forgot_password()
+                if st.button("Back to Login"):
+                    st.session_state.choice = "Login"
+                    st.rerun()
             elif st.session_state.choice == "Update Password":
                 change_password()
             
