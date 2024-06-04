@@ -7,11 +7,14 @@ import streamlit as st
 
 
 # MongoDB connection string
-CONNECTION_STRING = st.secrets['mongoURI']
+CONNECTION_STRING = "mongodb+srv://cpremithkumar:AFRMIg6IOzMfIG9w@informsqschallenge.vpwbqi4.mongodb.net/?retryWrites=true&w=majority&appName=informsqschallenge"
 
 client = MongoClient(CONNECTION_STRING)
 db = client.user_database  # Name your database
 users_collection = db.users  # Name your collection
+users_collection = users_collection
+
+
 #print(db, users_collection)
 
 # Function to create a user collection, not typically necessary in MongoDB as collections are created on the fly
