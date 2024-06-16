@@ -72,6 +72,7 @@ def save_files(user_id, files):
 
 def submission_page():
     st.header('Submit Your Files')
+    st.write('\n Note: In some cases, if the trained weight file is larger than 200MB, then  the participants should upload their weights to a google drive and then use the “gdown” library in the test script to automatically download the weights and load them into the model. For more details refer to the COMPETITION FLYER. \n')
     with st.form("file_upload_form"):
         code_file_train = st.file_uploader("Upload your model training code file (.py)", type=['py'], key="traincode")
         code_file_test = st.file_uploader("Upload your model testing code file (.py)", type=['py'], key="testcode")
