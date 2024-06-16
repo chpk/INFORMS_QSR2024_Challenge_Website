@@ -255,7 +255,7 @@ def display_home_page():
 
     # Download button
     if agree_checkbox:
-        st.markdown("[Download Dataset](https://virginiatech-my.sharepoint.com/:f:/g/personal/cpremithkumar_vt_edu/EkhUukjjYfBBrITV-J2DB7cB4WETZKDY6RHPNzu3jbkLbA?e=Vsi75Y)")
+        st.markdown("[Download Dataset](https://drive.google.com/file/d/158cly7gw6QuVdaoq9jyvSoxY7Bta9z1G/view?usp=sharing)")
     else:
         st.markdown("Please agree to the terms and conditions to download the dataset.")
 
