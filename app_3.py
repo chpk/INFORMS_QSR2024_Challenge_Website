@@ -55,14 +55,21 @@ def save_files(user_id, files):
     if all(files):
         # Create a new directory for the user's files
         directory = f"{user_id}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+        os.makedirs(directory, exist_ok=True)
 
-        # Create a BytesIO object to store the zip file in memory
-        zip_buffer = io.BytesIO()
+        # Save the uploaded files to the directory
+        for uploaded_file in files:
+            file_path = os.path.join(directory, uploaded_file.name)
+            with open(file_path, "wb") as f:
+                f.write(uploaded_file.getvalue())
 
-        # Create a zip file and add the uploaded files to it
-        with zipfile.ZipFile(zip_buffer, 'w') as zip_file:
-            for uploaded_file in files:
-                zip_file.writestr(uploaded_file.name, uploaded_file.getvalue())
+        # Create a zip file of the directory
+        zip_filename = f"{directory}.zip"
+        with zipfile.ZipFile(zip_filename, "w") as zip_file:
+            for root, dirs, files in os.walk(directory):
+                for file in files:
+                    file_path = os.path.join(root, file)
+                    zip_file.write(file_path, os.path.relpath(file_path, directory))
 
         # Configure AWS credentials
         #aws_access_key_id = st.secrets[]
@@ -84,9 +91,18 @@ def save_files(user_id, files):
         aws_secret_access_key= st.secrets['AWS_SECRET_ACCESS_KEY'],
         )
 
-        bucket_name = 'informsqsr2024'  # Replace with your S3 bucket name
+        bucket_name = 'Informsqsr2024'  # Replace with your S3 bucket name
         zip_filename = f"{directory}.zip"
-        s3.upload_fileobj(zip_buffer, bucket_name, zip_filename)
+        s3.upload_fileobj(zip_filename, bucket_name, zip_filename)
+
+        # Clean up the local directory and zip file
+        os.remove(zip_filename)
+        for root, dirs, files in os.walk(directory, topdown=False):
+            for file in files:
+                os.remove(os.path.join(root, file))
+            for dir in dirs:
+                os.rmdir(os.path.join(root, dir))
+        os.rmdir(directory)
 
         return True
     return False
