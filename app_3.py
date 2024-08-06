@@ -91,7 +91,7 @@ def save_files(user_id, files):
         aws_secret_access_key= st.secrets['AWS_SECRET_ACCESS_KEY'],
         )
 
-        bucket_name = 'Informsqsr2024'  # Replace with your S3 bucket name
+        bucket_name = 'informsqsr2024'  # Replace with your S3 bucket name
         zip_filename = f"{directory}.zip"
         s3.upload_fileobj(zip_filename, bucket_name, zip_filename)
 
