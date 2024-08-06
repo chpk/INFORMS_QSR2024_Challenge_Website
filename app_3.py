@@ -93,7 +93,7 @@ def save_files(user_id, files):
 
         bucket_name = 'informsqsr2024'  # Replace with your S3 bucket name
         zip_filename = f"{directory}.zip"
-        s3.upload_fileobj(zip_filename, bucket_name, zip_filename)
+        s3.upload_file(zip_filename, bucket_name, zip_filename)
 
         # Clean up the local directory and zip file
         os.remove(zip_filename)
