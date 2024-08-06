@@ -1,3 +1,8 @@
+import os
+import io
+import zipfile
+from datetime import datetime
+import boto3
 import streamlit as st
 from database_1 import add_userdata, login_user, find_user_by_email, send_password_email, update_password, users_collection
 from streamlit.components.v1 import html
@@ -48,26 +53,42 @@ def change_password():
             
 def save_files(user_id, files):
     if all(files):
-        base_directory = os.path.join('submissions', user_id)
-        version = 1
+        # Create a new directory for the user's files
+        directory = f"{user_id}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
 
-        # Check existing versions and determine the new version number
-        while os.path.exists(os.path.join(base_directory, f'V{version}')):
-            version += 1
+        # Create a BytesIO object to store the zip file in memory
+        zip_buffer = io.BytesIO()
 
-        # Create a new version directory if it doesn't exist
-        directory = os.path.join(base_directory, f'V{version}')
-        os.makedirs(directory, exist_ok=True)
+        # Create a zip file and add the uploaded files to it
+        with zipfile.ZipFile(zip_buffer, 'w') as zip_file:
+            for uploaded_file in files:
+                zip_file.writestr(uploaded_file.name, uploaded_file.getvalue())
 
-        # Save all uploaded files to the new version directory
-        successes = []
-        for uploaded_file in files:
-            file_path = os.path.join(directory, uploaded_file.name)
-            with open(file_path, "wb") as f:
-                f.write(uploaded_file.getbuffer())
-            successes.append(True)
+        # Configure AWS credentials
+        #aws_access_key_id = st.secrets[]
+        #aws_secret_access_key = st.secrets[]
 
-        return all(successes)
+        
+        # Create an S3 client with the provided credentials
+        #s3 = boto3.Session(
+        #    aws_access_key_id=aws_access_key_id,
+        #    aws_secret_access_key=aws_secret_access_key
+        #).client('s3')
+        #s3 = boto3.Session(region_name = st.secrets['AWS_DEFAULT_REGION'],
+        #aws_access_key_id = st.secrets['AWS_ACCESS_KEY_ID'],
+        #aws_secret_access_key= st.secrets['AWS_SECRET_ACCESS_KEY'],).client('s3')
+        s3 = boto3.client(
+        service_name="s3",
+        region_name = st.secrets['AWS_DEFAULT_REGION'],
+        aws_access_key_id = st.secrets['AWS_ACCESS_KEY_ID'],
+        aws_secret_access_key= st.secrets['AWS_SECRET_ACCESS_KEY'],
+        )
+
+        bucket_name = 'Informsqsr2024'  # Replace with your S3 bucket name
+        zip_filename = f"{directory}.zip"
+        s3.upload_fileobj(zip_buffer, bucket_name, zip_filename)
+
+        return True
     return False
 
 def submission_page():
