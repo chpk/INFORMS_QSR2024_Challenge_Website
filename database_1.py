@@ -64,7 +64,7 @@ def update_password(username, new_password):
 def send_password_email(email, userpassword):
     sender_email = "noreply.qsr24@gmail.com"
     receiver_email = email
-    password = "fkui blhi ywxm smqx"  # SMTP server password for sender_email
+    password = "jivw slra ikni vhxe"  # SMTP server password for sender_email
 
     message = MIMEMultipart("alternative")
     message["Subject"] = "Password Reset Request"
