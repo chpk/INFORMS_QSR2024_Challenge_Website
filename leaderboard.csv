@@ -1,6 +1,6 @@
-Rank,Name,Methodology,F1 Score,Accuracy %,Type 1 Error,Type 2 Error
-1,Team A,Random Forest,0.92,95%,0.03,0.05
-2,Team B,XGBoost,0.89,93%,0.04,0.07
-3,Team C,SVM,0.87,91%,0.06,0.09
-4,Team D,Logistic Regression,0.85,90%,0.08,0.1
-5,Team E,Neural Network,0.83,88%,0.09,0.12
+Rank,Team Members,Methodology,F1 Score
+--,Hamed Khosravi, Morteza Hajiabadi, Mohammadreza Shafie, Dr. Imtiaz Ahmed,GDANet,--
+--,Gyeongho Kim,Deep learning (DL) and conventioanl based 3D classifier,--
+--,Mohammad Bisheh, Nima Shoghi, Junghee Pyeon,CP decomposition based model,--
+--,Yuhao Zhong, Adithyaa Karthikeyan, Tapan Ganatma Nakkina, Andreas Lianos,VoxelCNN,--
+--,Sahand Hajifar,3D CNN+PCA+XGBoost+FFT,--
