@@ -136,7 +136,7 @@ def view_leaderboard():
     st.markdown("### Your Team: " +str(st.session_state['teamname']))
     st.write("Your team members: " + str(st.session_state['team_member_names']))
     #st.write() 
-    st.title("Top 10 Participants Leaderboard")
+    st.title("Participants Leaderboard")
     # Read the leaderboard data from the CSV file
     leaderboard_data = pd.read_csv("leaderboard.csv")
 
