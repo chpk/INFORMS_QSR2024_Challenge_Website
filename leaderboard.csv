@@ -1,6 +1,6 @@
 Rank,Team Members,Methodology,F1 Score
---,Hamed Khosravi, Morteza Hajiabadi, Mohammadreza Shafie, Dr. Imtiaz Ahmed,GDANet,--
+--,Hamed Khosravi; Morteza Hajiabadi; Mohammadreza Shafie; Dr. Imtiaz Ahmed,GDANet,--
 --,Gyeongho Kim,Deep learning (DL) and conventioanl based 3D classifier,--
---,Mohammad Bisheh, Nima Shoghi, Junghee Pyeon,CP decomposition based model,--
---,Yuhao Zhong, Adithyaa Karthikeyan, Tapan Ganatma Nakkina, Andreas Lianos,VoxelCNN,--
+--,Mohammad Bishe; Nima Shoghi; Junghee Pyeon, CP decomposition based model,--
+--,Yuhao Zhong; Adithyaa Karthikeyan; Tapan Ganatma Nakkina; Andreas Lianos,VoxelCNN,--
 --,Sahand Hajifar,3D CNN+PCA+XGBoost+FFT,--
