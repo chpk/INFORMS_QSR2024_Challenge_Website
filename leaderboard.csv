@@ -1,4 +1,4 @@
-Rank,Team Members,Methodology,F1 Score,Type-1 Error, Type-2 Error,log loss
+Rank,Team Members,Methodology,F1 Score,Type-1 Error,Type-2 Error,log loss
 1,Gyeongho Kim,Deep learning (DL) and conventioanl based 3D classifier,0.9458,0.0300,0.0400,1.1894 
 2,Sahand Hajifar,3D CNN+PCA+XGBoost+FFT,0.9259,0.0271,0.0833,1.5859
 3,Hamed Khosravi; Morteza Hajiabadi; Mohammadreza Shafie; Dr. Imtiaz Ahmed,GDANet,0.0551,0.9329,0.9100,33.3764
